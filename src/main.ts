@@ -10,14 +10,6 @@ import { processData } from "./processors/data-processor";
 import { generateConfig } from "./generators/config-generator";
 import { validateUUID } from "./validators";
 import { v4 as uuidv4 } from "uuid";
-import {
-  GlobalConfig,
-  FolderConfig,
-  RouteConfig,
-  DatabucketConfig,
-  ResponseConfig,
-  MockoonConfig,
-} from "./types";
 
 /**
  * Helper function to log messages with timestamps and separators

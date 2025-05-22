@@ -8,7 +8,6 @@ import {
   DatabucketConfig,
   MockoonConfig,
   FolderChild,
-  ResponseConfig,
 } from "../types";
 
 /**

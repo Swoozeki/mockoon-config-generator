@@ -3,11 +3,6 @@
  */
 
 /**
- * Validates that all required UUIDs are provided in the given object
- * @param obj The object to validate
- * @param path The path to the object (for error messages)
- */
-/**
  * Validates that the UUID is in the correct format
  * @param uuid The UUID to validate
  * @returns True if the UUID is valid, false otherwise
