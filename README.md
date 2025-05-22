@@ -151,6 +151,128 @@ export default {
 
 This provides type checking for your response bodies and better IDE support.
 
+## Explanation of configuration
+
+This section provides detailed information about all configuration properties used in Mockoon.
+
+<details>
+<summary><strong>Environment Properties</strong></summary>
+
+- **uuid**: Unique identifier for the environment
+- **lastMigration**: Version number of the last migration applied to this environment
+- **name**: Display name of the environment
+- **port**: Port number the mock server listens on (default: 3000)
+- **hostname**: Hostname the server binds to (empty string means all interfaces)
+- **endpointPrefix**: Prefix added to all routes (e.g., "/api/v1")
+- **latency**: Global response delay in milliseconds
+- **folders**: Array of folders for organizing routes
+- **routes**: Array of route definitions
+- **rootChildren**: References to routes/folders at the root level
+- **proxyMode**: Whether proxy mode is enabled
+- **proxyRemovePrefix**: Whether to remove the endpoint prefix when proxying
+- **proxyHost**: Target host for proxying requests
+- **proxyReqHeaders**: Headers to add to proxied requests
+- **proxyResHeaders**: Headers to add to proxied responses
+- **tlsOptions**: TLS/HTTPS configuration
+- **cors**: Whether CORS is enabled
+- **headers**: Global headers added to all responses
+- **data**: Array of data buckets
+- **callbacks**: Array of callback definitions
+</details>
+
+<details>
+<summary><strong>TLS Options Properties</strong></summary>
+
+- **enabled**: Whether TLS/HTTPS is enabled
+- **type**: Type of TLS configuration ('PFX' or 'CERT')
+- **pfxPath**: Path to PFX/PKCS12 file
+- **certPath**: Path to certificate file (for 'CERT' type)
+- **keyPath**: Path to private key file (for 'CERT' type)
+- **caPath**: Path to CA certificate file
+- **passphrase**: Password for PFX file or private key
+</details>
+
+<details>
+<summary><strong>Route Properties</strong></summary>
+
+- **uuid**: Unique identifier for the route
+- **type**: Type of route ('http', 'crud', or 'ws')
+- **documentation**: Description/notes for the route
+- **method**: HTTP method (get, post, put, etc.)
+- **endpoint**: URL path pattern for the route
+- **responses**: Array of possible responses
+- **responseMode**: How to select responses (RANDOM, SEQUENTIAL, etc.)
+- **streamingMode**: For WebSocket routes (UNICAST or BROADCAST)
+- **streamingInterval**: Interval for streaming responses in milliseconds
+</details>
+
+<details>
+<summary><strong>RouteResponse Properties</strong></summary>
+
+- **uuid**: Unique identifier for the response
+- **rules**: Array of rules to determine when to use this response
+- **rulesOperator**: How to combine rules ('AND' or 'OR')
+- **statusCode**: HTTP status code
+- **label**: Display name for the response
+- **headers**: Response-specific headers
+- **body**: Response body content
+- **latency**: Response-specific delay in milliseconds
+- **bodyType**: How to serve the body (INLINE, FILE, or DATABUCKET)
+- **filePath**: Path to file (for FILE bodyType)
+- **databucketID**: ID of data bucket (for DATABUCKET bodyType)
+- **sendFileAsBody**: Whether to send file content as body
+- **disableTemplating**: Whether to disable templating for this response
+- **fallbackTo404**: Whether to return 404 if rules don't match
+- **default**: Whether this is the default response
+- **crudKey**: ID field name for CRUD operations
+- **callbacks**: Array of callbacks to trigger
+</details>
+
+<details>
+<summary><strong>ResponseRule Properties</strong></summary>
+
+- **target**: What to check (body, query, header, etc.)
+- **modifier**: Path or key to check within the target
+- **value**: Value to compare against
+- **invert**: Whether to invert the match result
+- **operator**: Comparison operator (equals, regex, etc.)
+</details>
+
+<details>
+<summary><strong>Folder Properties</strong></summary>
+
+- **uuid**: Unique identifier for the folder
+- **name**: Display name of the folder
+- **children**: Array of references to routes or subfolders
+</details>
+
+<details>
+<summary><strong>DataBucket Properties</strong></summary>
+
+- **uuid**: Unique identifier for the data bucket
+- **id**: Short ID for referencing in templates
+- **name**: Display name of the data bucket
+- **documentation**: Description/notes for the data bucket
+- **value**: Content of the data bucket (usually JSON)
+</details>
+
+<details>
+<summary><strong>Callback Properties</strong></summary>
+
+- **uuid**: Unique identifier for the callback
+- **id**: Short ID for referencing
+- **name**: Display name of the callback
+- **documentation**: Description/notes for the callback
+- **method**: HTTP method to use
+- **uri**: URL to call
+- **headers**: Headers to send with the callback
+- **body**: Body content to send
+- **bodyType**: How to serve the body (INLINE, FILE, or DATABUCKET)
+- **filePath**: Path to file (for FILE bodyType)
+- **databucketID**: ID of data bucket (for DATABUCKET bodyType)
+- **sendFileAsBody**: Whether to send file content as body
+</details>
+
 ## Requirements
 
 - Node.js 14 or higher
