@@ -71,8 +71,51 @@ import {
   RouteConfig,
   ResponseConfig,
   DatabucketConfig,
+  // Additional available types
+  LogicalOperators,
+  BodyTypes,
+  Methods,
+  RouteType,
+  ResponseMode,
+  StreamingMode,
+  ResponseRule,
+  Callback,
+  Environments,
 } from "mockoon-config-generator";
 ```
+
+### Available Types
+
+The package provides comprehensive type definitions for Mockoon configuration:
+
+- **Core Configuration Types**
+
+  - `GlobalConfig`: Environment-level settings
+  - `FolderConfig`: Folder structure and metadata
+  - `RouteConfig`: API endpoint configuration
+  - `ResponseConfig`: Response configuration for routes
+  - `DatabucketConfig`: Data storage configuration
+
+- **Route and Response Types**
+
+  - `RouteType`: HTTP, CRUD, or WebSocket routes (`"http" | "crud" | "ws"`)
+  - `Methods`: Supported HTTP methods (get, post, put, etc.)
+  - `BodyTypes`: Response body types (`"INLINE" | "FILE" | "DATABUCKET"`)
+  - `ResponseMode`: Response selection modes (`"RANDOM" | "SEQUENTIAL" | "DISABLE_RULES" | "FALLBACK"`)
+  - `StreamingMode`: WebSocket streaming modes (`"UNICAST" | "BROADCAST"`)
+
+- **Rules and Headers**
+
+  - `LogicalOperators`: Operators for combining rules (`"AND" | "OR"`)
+  - `ResponseRule`: Rule configuration for conditional responses
+  - `ResponseRuleOperators`: Available operators for rules (equals, regex, etc.)
+  - `ResponseRuleTargets`: Targets for rules (body, query, header, etc.)
+  - `HeaderConfig`: HTTP header configuration
+
+- **Additional Types**
+  - `Callback`: Configuration for callback requests
+  - `TLSOptions`: TLS/HTTPS configuration
+  - `Environments`: Collection of environment configurations
 
 ### Using Custom Interfaces for Response Bodies
 

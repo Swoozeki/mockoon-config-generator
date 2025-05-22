@@ -27,3 +27,7 @@ build/
 *.swp
 *.swo
 .DS_Store
+
+# Examples
+configs/
+example-config.json

@@ -173,6 +173,20 @@ export default {
   port: 3000,
   hostname: "",
   proxyMode: false,
+  proxyHost: "",
+  proxyRemovePrefix: false,
+  proxyReqHeaders: [
+    {
+      key: "",
+      value: "",
+    }
+  ],
+  proxyResHeaders: [
+    {
+      key: "",
+      value: "",
+    }
+  ],
   cors: true,
   headers: [
     {
@@ -181,6 +195,14 @@ export default {
     },
     {
       key: "Access-Control-Allow-Origin",
+      value: "*",
+    },
+    {
+      key: "Access-Control-Allow-Methods",
+      value: "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS",
+    },
+    {
+      key: "Access-Control-Allow-Headers",
       value: "*",
     },
   ],
@@ -193,6 +215,7 @@ export default {
     caPath: "",
     passphrase: "",
   },
+  callbacks: [],
 } as GlobalConfig;
 `
     );
@@ -251,8 +274,13 @@ export default {
       disableTemplating: false,
       fallbackTo404: false,
       default: true,
+      crudKey: "id",
+      callbacks: [],
     },
   ],
+  responseMode: null,
+  streamingMode: null,
+  streamingInterval: 0,
 } as RouteConfig<ExampleResponse>;
 `
     );
@@ -296,8 +324,13 @@ export default {
       disableTemplating: false,
       fallbackTo404: false,
       default: true,
+      crudKey: "id",
+      callbacks: [],
     },
   ],
+  responseMode: null,
+  streamingMode: null,
+  streamingInterval: 0,
 } as RouteConfig<CreateResponse>;
 `
     );
