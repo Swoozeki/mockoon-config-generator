@@ -1,0 +1,21 @@
+# Source files (we only want to publish the compiled JavaScript)
+src/
+configs/
+
+# Configuration files
+tsconfig.json
+.gitignore
+
+# Development files
+node_modules/
+.vscode/
+.idea/
+
+# Test files
+__tests__/
+*.test.ts
+*.spec.ts
+
+# Temporary files
+.tmp/
+*.log

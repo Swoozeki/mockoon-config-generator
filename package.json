@@ -1,0 +1,51 @@
+{
+  "name": "mockoon-config-generator",
+  "version": "1.0.0",
+  "description": "A tool to generate Mockoon configuration files from TypeScript files",
+  "main": "dist/index.js",
+  "bin": {
+    "mockoon-config-generator": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "generate": "ts-node src/index.ts generate",
+    "test": "jest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mockoon",
+    "api",
+    "mock",
+    "typescript",
+    "config-generator",
+    "api-mocking"
+  ],
+  "author": "Sujit Karki <sujitkarki95@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/swoozeki/mockoon-config-generator.git"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "fs-extra": "^11.1.1",
+    "glob": "^10.3.3",
+    "typescript": "^5.1.6",
+    "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.1",
+    "@types/node": "^20.4.5",
+    "@types/yargs": "^17.0.24",
+    "ts-node": "^10.9.1"
+  }
+}

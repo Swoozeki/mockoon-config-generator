@@ -1,0 +1,129 @@
+{
+  "uuid": "133659f5-634e-4385-bf7c-0279f626d386",
+  "lastMigration": 35,
+  "name": "My Super Awesome Mockoon API",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3000,
+  "hostname": "",
+  "proxyMode": true,
+  "proxyHost": "https://api.sandbox-koho.ca",
+  "proxyRemovePrefix": false,
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "*"
+    }
+  ],
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "folders": [
+    {
+      "uuid": "184807bf-4acd-4891-bada-4b47a5d8f560",
+      "name": "Transaction Instalments",
+      "children": [
+        {
+          "type": "route",
+          "uuid": "e17b35bc-24b7-4e6e-a4d9-a08278d7bd98"
+        }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "uuid": "e17b35bc-24b7-4e6e-a4d9-a08278d7bd98",
+      "type": "http",
+      "documentation": "Get Eligibility",
+      "method": "get",
+      "endpoint": "credit/1.0/underwriting/transactioninstalment/user",
+      "responses": [
+        {
+          "uuid": "5440c285-3482-48a3-b266-32b03ab5f269",
+          "body": "{}",
+          "latency": 1000,
+          "statusCode": 404,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "a2e5269e-7187-4062-8af6-ae9bd034a8ac",
+          "body": "{\n  \"max_loan_amount\": \"$5000.00\",\n  \"min_loan_amount\": \"$100.00\",\n  \"fees\": [\n    {\n      \"duration\": 3,\n      \"percentage\": 15,\n      \"amount\": \"$11.25\",\n      \"name\": \"3-month instalment fee\"\n    },\n    {\n      \"duration\": 6,\n      \"percentage\": 20,\n      \"amount\": \"$20.00\",\n      \"name\": \"6-month instalment fee\"\n    },\n    {\n      \"duration\": 9,\n      \"percentage\": 25,\n      \"amount\": \"$25.00\",\n      \"name\": \"9-month instalment fee\"\n    }\n  ],\n  \"interest_rate\": 15,\n  \"eligibility_result\": \"NOT_ELIGIBLE\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "NOT_ELIGIBLE",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "31bfc3f2-b8bb-4dd5-9beb-9af39dcf3437",
+          "body": "{\n  \"max_loan_amount\": \"$5000.00\",\n  \"min_loan_amount\": \"$100.00\",\n  \"fees\": [\n    {\n      \"duration\": 3,\n      \"percentage\": 15,\n      \"amount\": \"$11.25\",\n      \"name\": \"3-month instalment fee\"\n    },\n    {\n      \"duration\": 6,\n      \"percentage\": 20,\n      \"amount\": \"$20.00\",\n      \"name\": \"6-month instalment fee\"\n    },\n    {\n      \"duration\": 9,\n      \"percentage\": 25,\n      \"amount\": \"$25.00\",\n      \"name\": \"9-month instalment fee\"\n    }\n  ],\n  \"interest_rate\": 15,\n  \"eligibility_result\": \"ELIGIBLE\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "ELIGIBLE",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ]
+    }
+  ],
+  "data": [
+    {
+      "uuid": "91062199-b9b6-48a4-80c2-dcf5f6287d80",
+      "id": "334z",
+      "name": "Users",
+      "documentation": "",
+      "value": "[\n  {{#repeat 50}}\n  {\n    \"id\": \"{{faker 'string.uuid'}}\",\n    \"username\": \"{{faker 'internet.userName'}}\"\n  }\n  {{/repeat}}\n]"
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "folder",
+      "uuid": "184807bf-4acd-4891-bada-4b47a5d8f560"
+    }
+  ]
+}
