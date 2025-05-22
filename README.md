@@ -56,7 +56,7 @@ mockoon-config-generator --help
 For the most reliable workflow:
 
 1. Make changes to your TypeScript configuration files
-2. Run `npm run generate` to rebuild the config
+2. Run one of the above `mockoon-config-generator` command to rebuild the config
 3. Verify the changes in the generated config.json file
 
 ## TypeScript Definitions
