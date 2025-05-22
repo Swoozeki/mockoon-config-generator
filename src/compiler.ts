@@ -89,28 +89,6 @@ export async function compileTypeScript(
   }
 
   console.log("TypeScript compilation completed successfully");
-
-  // Copy the directory structure to maintain the same paths
-  // This ensures that imports between files work correctly
-  const configDirBasename = path.basename(configDir);
-  const tmpConfigDir = path.join(outDir, configDirBasename);
-
-  // Create the directory if it doesn't exist
-  await fs.ensureDir(tmpConfigDir);
-
-  // Copy all compiled JS files to maintain the directory structure
-  const jsFiles = await glob(path.join(outDir, "**/*.js"));
-  console.log(
-    `Copying ${jsFiles.length} compiled JavaScript files to maintain directory structure`
-  );
-
-  for (const file of jsFiles) {
-    const relativePath = path.relative(outDir, file);
-    const targetPath = path.join(tmpConfigDir, relativePath);
-    await fs.ensureDir(path.dirname(targetPath));
-    await fs.copyFile(file, targetPath);
-  }
-
-  console.log(`Compilation output directory: ${tmpConfigDir}`);
-  return tmpConfigDir;
+  console.log(`Compilation output directory: ${outDir}`);
+  return outDir;
 }

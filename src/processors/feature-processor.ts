@@ -21,7 +21,8 @@ interface FeatureProcessingResult {
 export async function processFeatures(
   compiledDir: string
 ): Promise<FeatureProcessingResult> {
-  const featuresDir = path.join(compiledDir, "features");
+  // Use path.resolve to ensure we're using absolute paths
+  const featuresDir = path.resolve(compiledDir, "features");
   const folders: FolderConfig[] = [];
   const routes: RouteConfig[] = [];
 

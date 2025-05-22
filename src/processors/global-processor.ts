@@ -13,7 +13,7 @@ import { GlobalConfig } from "../types";
 export async function processGlobalConfig(
   compiledDir: string
 ): Promise<GlobalConfig> {
-  const globalPath = path.join(compiledDir, "global.js");
+  const globalPath = path.resolve(compiledDir, "global.js");
 
   // Check if global.js exists
   if (!fs.existsSync(globalPath)) {

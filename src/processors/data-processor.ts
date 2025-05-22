@@ -13,7 +13,8 @@ import { DatabucketConfig } from "../types";
 export async function processData(
   compiledDir: string
 ): Promise<DatabucketConfig[]> {
-  const dataDir = path.join(compiledDir, "data");
+  // Use path.resolve to ensure we're using absolute paths
+  const dataDir = path.resolve(compiledDir, "data");
   const databuckets: DatabucketConfig[] = [];
 
   // Check if data directory exists
