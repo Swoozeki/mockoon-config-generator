@@ -4,6 +4,7 @@
  */
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
+import * as path from "path";
 import { main } from "./main";
 
 // Export types for package users
@@ -11,33 +12,22 @@ export * from "./types";
 
 // Parse command line arguments
 yargs(hideBin(process.argv))
-  .command(
-    "generate [configDir] [outputPath]",
-    "Generate Mockoon config",
-    (yargs) => {
-      return yargs
-        .positional("configDir", {
-          describe: "Directory containing config files",
-          default: "./configs",
-          type: "string",
-        })
-        .positional("outputPath", {
-          describe: "Output path for the generated config",
-          default: "./configs/config.json",
-          type: "string",
-        });
-    },
-    (argv) => {
-      main(argv.configDir as string, argv.outputPath as string);
-    }
-  )
+  .option("baseDir", {
+    alias: "b",
+    describe: "Base directory for all files",
+    default: "./mockoon-config",
+    type: "string",
+  })
   .command(
     "$0",
-    "Default command",
+    "Generate Mockoon config",
     () => {},
     (argv) => {
-      // If no command is specified, run the generate command with default options
-      main("./configs", "./configs/config.json");
+      const baseDir = argv.baseDir as string;
+      const configDir = path.join(baseDir, "src");
+      const outputPath = path.join(baseDir, "dist", "config.json");
+
+      main(configDir, outputPath, baseDir);
     }
   )
   .help().argv;

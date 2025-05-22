@@ -11,11 +11,14 @@ import { glob } from "glob";
  * @param configDir The directory containing the TypeScript files
  * @returns The path to the compiled JavaScript files
  */
-export async function compileTypeScript(configDir: string): Promise<string> {
+export async function compileTypeScript(
+  configDir: string,
+  baseDir: string
+): Promise<string> {
   console.log("Starting TypeScript compilation...");
 
   // Clean up any previous temporary directory
-  const outDir = path.join(process.cwd(), ".tmp");
+  const outDir = path.join(baseDir, ".tmp");
   if (fs.existsSync(outDir)) {
     console.log("Cleaning up previous temporary directory...");
     await fs.remove(outDir);

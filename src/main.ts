@@ -100,24 +100,30 @@ async function processAndGenerateConfig(
  */
 export async function main(
   configDir: string,
-  outputPath: string
+  outputPath: string,
+  baseDir: string
 ): Promise<void> {
   try {
     logWithTimestamp("Starting Mockoon config generation", true);
+    console.log(`Base directory: ${baseDir}`);
     console.log(`Config directory: ${configDir}`);
     console.log(`Output path: ${outputPath}`);
+
+    // Ensure base directory and output directory exist
+    await fs.ensureDir(baseDir);
+    await fs.ensureDir(path.dirname(outputPath));
 
     // Check if config directory exists
     if (!fs.existsSync(configDir)) {
       console.log(`Config directory ${configDir} does not exist.`);
       console.log("Generating example configuration...");
-      await generateExampleConfig(configDir, outputPath);
+      await generateExampleConfig(configDir, outputPath, baseDir);
       return;
     }
 
     // Compile TypeScript to JavaScript
     console.log("Compiling TypeScript files...");
-    const compiledDir = await compileTypeScript(configDir);
+    const compiledDir = await compileTypeScript(configDir, baseDir);
 
     await processAndGenerateConfig(compiledDir, outputPath);
 
@@ -138,13 +144,22 @@ export async function main(
  */
 async function generateExampleConfig(
   configDir: string,
-  outputPath: string
+  outputPath: string,
+  baseDir: string
 ): Promise<void> {
   try {
     // Create directory structure
-    console.log(`Creating directory structure in ${configDir}...`);
+    console.log(`Creating directory structure in ${baseDir}...`);
+
+    // Ensure the src directory exists
+    await fs.ensureDir(configDir);
+
+    // Create feature and data directories inside src
     await fs.ensureDir(path.join(configDir, "features", "example-feature"));
     await fs.ensureDir(path.join(configDir, "data"));
+
+    // Ensure the dist directory exists
+    await fs.ensureDir(path.dirname(outputPath));
 
     // Generate folder config
     const folderConfig = {
@@ -364,7 +379,7 @@ export default {
 
     // Now run the normal process to generate the config
     console.log("Generating config from example files...");
-    const compiledDir = await compileTypeScript(configDir);
+    const compiledDir = await compileTypeScript(configDir, baseDir);
 
     await processAndGenerateConfig(compiledDir, outputPath);
 

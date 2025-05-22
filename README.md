@@ -14,17 +14,24 @@ This tool allows you to define your Mockoon API mock configuration using TypeScr
 
 ## Directory Structure
 
+The tool uses a base directory (default: `mockoon-config`) with the following structure:
+
 ```
-configs/
-  global.ts             # Environment-level settings
-  features/
-    feature-name/       # Each subdirectory becomes a folder in Mockoon
-      folder.ts         # (Optional) Configuration for the folder
-      endpoint-name.ts  # Each file becomes a route within that folder
-  data/
-    data-name.ts        # Each file becomes a databucket entry
-  config.json           # The final generated file
+mockoon-config/
+  src/                  # Source TypeScript files
+    global.ts           # Environment-level settings
+    features/
+      feature-name/     # Each subdirectory becomes a folder in Mockoon
+        folder.ts       # (Optional) Configuration for the folder
+        endpoint-name.ts # Each file becomes a route within that folder
+    data/
+      data-name.ts      # Each file becomes a databucket entry
+  dist/
+    config.json         # The final generated file
+  .tmp/                 # Temporary directory for compiled files (auto-cleaned)
 ```
+
+You can customize the base directory using the `--baseDir` option.
 
 ## Installation
 
@@ -41,11 +48,11 @@ npm install --save-dev mockoon-config-generator
 If config directory is empty or doesn't exist, it'll automatically generate example
 
 ```bash
-# Generate config using default paths (./configs -> ./configs/config.json)
+# Generate config using default base directory (./mockoon-config)
 mockoon-config-generator
 
-# Or specify custom paths
-mockoon-config-generator generate ./my-configs ./output/mockoon-config.json
+# Specify a custom base directory
+mockoon-config-generator --baseDir ./my-mockoon-project
 
 # Help command to see all available options
 mockoon-config-generator --help
