@@ -3,15 +3,18 @@
  */
 import * as fs from "fs-extra";
 import * as path from "path";
+import { DatabucketConfig } from "../types";
 
 /**
  * Processes the data files
  * @param compiledDir The directory containing the compiled JavaScript files
  * @returns An array of databucket objects
  */
-export async function processData(compiledDir: string): Promise<any[]> {
+export async function processData(
+  compiledDir: string
+): Promise<DatabucketConfig[]> {
   const dataDir = path.join(compiledDir, "data");
-  const databuckets: any[] = [];
+  const databuckets: DatabucketConfig[] = [];
 
   // Check if data directory exists
   if (!fs.existsSync(dataDir)) {

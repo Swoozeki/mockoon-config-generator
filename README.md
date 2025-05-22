@@ -6,10 +6,11 @@ A tool to generate Mockoon configuration files from TypeScript files.
 
 This tool allows you to define your Mockoon API mock configuration using TypeScript files, which are then compiled and combined into a single Mockoon configuration file. This approach provides several benefits:
 
-- **Type safety**: Define your mock API with TypeScript's type checking
+- **Type safety**: Define your mock API with TypeScript's type checking and custom interfaces
 - **Modularity**: Split your configuration into multiple files for better organization
 - **Version control**: Easier to track changes in your mock API configuration
 - **Reusability**: Share common configurations across different endpoints
+- **Type definitions**: Full TypeScript definitions for all configuration objects
 
 ## Directory Structure
 
@@ -37,6 +38,8 @@ npm install --save-dev mockoon-config-generator
 
 ## Usage
 
+If config directory is empty or doesn't exist, it'll automatically generate example
+
 ```bash
 # Generate config using default paths (./configs -> ./configs/config.json)
 mockoon-config-generator
@@ -48,19 +51,6 @@ mockoon-config-generator generate ./my-configs ./output/mockoon-config.json
 mockoon-config-generator --help
 ```
 
-You can also use the npm scripts if you've installed the package locally:
-
-```bash
-# Generate config once
-npm run generate
-
-# Run with custom paths
-npm run generate -- ./my-configs ./output/mockoon-config.json
-
-# Build the TypeScript code
-npm run build
-```
-
 ### Workflow
 
 For the most reliable workflow:
@@ -69,62 +59,54 @@ For the most reliable workflow:
 2. Run `npm run generate` to rebuild the config
 3. Verify the changes in the generated config.json file
 
-## Configuration Files
+## TypeScript Definitions
 
-### Global Configuration (global.ts)
+The package includes full TypeScript definitions for all configuration objects. You can import these types in your configuration files:
 
 ```typescript
-export default {
-  uuid: "133659f5-634e-4385-bf7c-0279f626d386", // Required
-  name: "My API",
-  port: 3001,
-  // ... other Mockoon environment settings
-};
+// When using the installed npm package
+import {
+  GlobalConfig,
+  FolderConfig,
+  RouteConfig,
+  ResponseConfig,
+  DatabucketConfig,
+} from "mockoon-config-generator";
 ```
 
-### Folder Configuration (features/feature-name/folder.ts)
+### Using Custom Interfaces for Response Bodies
+
+You can specify the type of response body for a route using generics:
 
 ```typescript
-export default {
-  uuid: "184807bf-4acd-4891-bada-4b47a5d8f560", // Required
-  name: "Feature Name",
-  children: [], // Will be populated automatically
-};
-```
+import { RouteConfig } from "mockoon-config-generator";
 
-### Route Configuration (features/feature-name/endpoint-name.ts)
+// Define your custom interface
+interface ProductResponse {
+  id: string;
+  name: string;
+  price: number;
+  inStock: boolean;
+}
 
-```typescript
+// Use the interface as a generic type parameter
 export default {
-  uuid: "e17b35bc-24b7-4e6e-a4d9-a08278d7bd98", // Required
-  type: "http",
-  documentation: "Endpoint description",
-  method: "get",
-  endpoint: "api/endpoint",
+  // Route configuration...
   responses: [
     {
-      uuid: "5440c285-3482-48a3-b266-32b03ab5f269", // Required
-      body: "{}",
-      statusCode: 200,
-      // ... other response settings
+      // Response configuration...
+      body: {
+        id: "prod-123",
+        name: "Product Name",
+        price: 99.99,
+        inStock: true,
+      },
     },
   ],
-};
+} as RouteConfig<ProductResponse>;
 ```
 
-### Databucket Configuration (data/data-name.ts)
-
-```typescript
-export default {
-  uuid: "91062199-b9b6-48a4-80c2-dcf5f6287d80", // Required
-  id: "users",
-  name: "Users",
-  value: `[
-    {"id": 1, "name": "User 1"},
-    {"id": 2, "name": "User 2"}
-  ]`,
-};
-```
+This provides type checking for your response bodies and better IDE support.
 
 ## Requirements
 

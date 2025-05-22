@@ -3,13 +3,14 @@
  */
 import * as fs from "fs-extra";
 import * as path from "path";
+import { FolderConfig, RouteConfig } from "../types";
 
 /**
  * Interface for the result of processing features
  */
 interface FeatureProcessingResult {
-  folders: any[];
-  routes: any[];
+  folders: FolderConfig[];
+  routes: RouteConfig[];
 }
 
 /**
@@ -21,8 +22,8 @@ export async function processFeatures(
   compiledDir: string
 ): Promise<FeatureProcessingResult> {
   const featuresDir = path.join(compiledDir, "features");
-  const folders: any[] = [];
-  const routes: any[] = [];
+  const folders: FolderConfig[] = [];
+  const routes: RouteConfig[] = [];
 
   // Check if features directory exists
   if (!fs.existsSync(featuresDir)) {
@@ -40,7 +41,7 @@ export async function processFeatures(
 
     // Create folder object
     const folderConfigPath = path.join(featurePath, "folder.js");
-    let folder: any;
+    let folder: FolderConfig;
 
     if (fs.existsSync(folderConfigPath)) {
       // If folder.js exists, use it for folder configuration
@@ -48,6 +49,7 @@ export async function processFeatures(
     } else {
       // Otherwise, create a basic folder object with the directory name
       folder = {
+        uuid: require("uuid").v4(), // Generate a UUID for the folder
         name: featureDir
           .replace(/-/g, " ")
           .replace(/\b\w/g, (l) => l.toUpperCase()), // Convert kebab-case to Title Case

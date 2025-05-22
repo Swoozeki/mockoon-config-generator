@@ -10,6 +10,14 @@ import { processData } from "./processors/data-processor";
 import { generateConfig } from "./generators/config-generator";
 import { validateUUID } from "./validators";
 import { v4 as uuidv4 } from "uuid";
+import {
+  GlobalConfig,
+  FolderConfig,
+  RouteConfig,
+  DatabucketConfig,
+  ResponseConfig,
+  MockoonConfig,
+} from "./types";
 
 /**
  * Helper function to log messages with timestamps and separators
@@ -132,61 +140,6 @@ export async function main(
 }
 
 /**
- * Creates a common response object for route configurations
- * @param statusCode HTTP status code
- * @param label Response label
- * @param body Response body
- * @returns Response configuration object
- */
-function createResponseConfig(
-  statusCode: number,
-  label: string,
-  body: any
-): any {
-  return {
-    uuid: uuidv4(),
-    body: JSON.stringify(body, null, 2),
-    latency: 0,
-    statusCode,
-    label,
-    headers: [],
-    bodyType: "INLINE",
-    filePath: "",
-    databucketID: "",
-    sendFileAsBody: false,
-    rules: [],
-    rulesOperator: "OR",
-    disableTemplating: false,
-    fallbackTo404: false,
-    default: true,
-  };
-}
-
-/**
- * Creates a common route configuration object
- * @param method HTTP method
- * @param documentation Route documentation
- * @param endpoint API endpoint
- * @param responseConfig Response configuration
- * @returns Route configuration object
- */
-function createRouteConfig(
-  method: string,
-  documentation: string,
-  endpoint: string,
-  responseConfig: any
-): any {
-  return {
-    uuid: uuidv4(),
-    type: "http",
-    documentation,
-    method,
-    endpoint,
-    responses: [responseConfig],
-  };
-}
-
-/**
  * Generates an example configuration with a sample feature and endpoints
  * @param configDir The directory to create for example config files
  * @param outputPath The path to write the generated config to
@@ -217,6 +170,8 @@ async function generateExampleConfig(
       `/**
  * Global configuration for the Mockoon environment
  */
+import { GlobalConfig } from "mockoon-config-generator";
+
 export default {
   uuid: "${uuidv4()}",
   lastMigration: 33,
@@ -246,7 +201,7 @@ export default {
     caPath: "",
     passphrase: "",
   },
-};
+} as GlobalConfig;
 `
     );
 
@@ -256,11 +211,13 @@ export default {
       `/**
  * Configuration for the Example Feature folder
  */
+import { FolderConfig } from "mockoon-config-generator";
+
 export default {
   uuid: "${folderConfig.uuid}",
   name: "Example Feature",
   children: [],
-};
+} as FolderConfig;
 `
     );
 
@@ -270,6 +227,15 @@ export default {
       `/**
  * Configuration for the Get Example Data endpoint
  */
+import { RouteConfig } from "mockoon-config-generator";
+
+/**
+ * Example response interface
+ */
+interface ExampleResponse {
+  message: string;
+}
+
 export default {
   uuid: "${uuidv4()}",
   type: "http",
@@ -279,11 +245,7 @@ export default {
   responses: [
     {
       uuid: "${uuidv4()}",
-      body: JSON.stringify(
-        { message: "This is an example response" },
-        null,
-        2
-      ),
+      body: { message: "This is an example response" },
       latency: 0,
       statusCode: 200,
       label: "Success",
@@ -299,7 +261,7 @@ export default {
       default: true,
     },
   ],
-};
+} as RouteConfig<ExampleResponse>;
 `
     );
 
@@ -309,6 +271,16 @@ export default {
       `/**
  * Configuration for the Create Example Data endpoint
  */
+import { RouteConfig } from "mockoon-config-generator";
+
+/**
+ * Create response interface
+ */
+interface CreateResponse {
+  id: string;
+  success: boolean;
+}
+
 export default {
   uuid: "${uuidv4()}",
   type: "http",
@@ -318,11 +290,7 @@ export default {
   responses: [
     {
       uuid: "${uuidv4()}",
-      body: JSON.stringify(
-        { id: "{{faker 'string.uuid'}}", success: true },
-        null,
-        2
-      ),
+      body: { id: "{{faker 'string.uuid'}}", success: true },
       latency: 0,
       statusCode: 201,
       label: "Created",
@@ -338,7 +306,7 @@ export default {
       default: true,
     },
   ],
-};
+} as RouteConfig<CreateResponse>;
 `
     );
 
@@ -348,6 +316,8 @@ export default {
       `/**
  * Configuration for the Users databucket
  */
+import { DatabucketConfig } from "mockoon-config-generator";
+
 export default {
   uuid: "${uuidv4()}",
   id: "users",
@@ -363,7 +333,7 @@ export default {
     }
     {{/repeat}}
   ]\`,
-};
+} as DatabucketConfig;
 `
     );
 

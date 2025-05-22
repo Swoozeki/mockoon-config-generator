@@ -6,6 +6,9 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { main } from "./main";
 
+// Export types for package users
+export * from "./types";
+
 // Parse command line arguments
 yargs(hideBin(process.argv))
   .command(

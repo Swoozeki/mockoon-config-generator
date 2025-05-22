@@ -3,13 +3,16 @@
  */
 import * as fs from "fs-extra";
 import * as path from "path";
+import { GlobalConfig } from "../types";
 
 /**
  * Processes the global configuration file
  * @param compiledDir The directory containing the compiled JavaScript files
  * @returns The global configuration object
  */
-export async function processGlobalConfig(compiledDir: string): Promise<any> {
+export async function processGlobalConfig(
+  compiledDir: string
+): Promise<GlobalConfig> {
   const globalPath = path.join(compiledDir, "global.js");
 
   // Check if global.js exists
